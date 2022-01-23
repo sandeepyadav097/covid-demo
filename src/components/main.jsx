@@ -14,7 +14,6 @@ const Main = () => {
   const loading = useSelector((state) => state.fetchDataReducer.loading);
   const error = useSelector((state) => state.fetchDataReducer.error);
   const ref=useRef();
-  const key = 'updatable';
   useEffect(() => {
     dispatch(fetchData());
   }, []);
@@ -36,36 +35,6 @@ const getNotifDataFunt = (id) => {
   return temp;
 }
 
-// const openNotification = (id) => {
-//  console.log(id)
-//   const getNotifData=getNotifDataFunt(id)
-//   const args = {
-//     key,
-//     message: <h2>{getNotifData[0].state_name}</h2>,
-//     description:<div>
-//      <table>
-//     <tr>
-   
-//     <th>Active</th>
-//     <th>Cured</th>
-//     <th>Death</th>
-//   </tr>
- 
-//     <tr>
-   
-   
-//     <td>{getNotifData[0].active}</td>
-//     <td>{getNotifData[0].cured}</td>
-//     <td>{getNotifData[0].death}</td>
-//   </tr>
-//   </table>
-//     </div>,
-//     duration: 10,
-//   };
-//   const conditions = ['foreign','water']
-//   if(!conditions.some(el => id.includes(el)))
-//   notification.open(args);
-// };
 const reset = () => {
   ref.current.state.value="";
   dispatch(fetchData());
@@ -126,8 +95,6 @@ const formatDataSource= () => {
 
   </div>
 
- 
-
       <Row gutter={1} style={{textAlign:'center'}}>
         <Col span={7} />
     <Col span={4}>
@@ -145,32 +112,8 @@ const formatDataSource= () => {
   </Row>
 <br/>
 
-
-  
   <br/>
- 
     {error && !loading && <h2>{error}</h2>}
-
-    {/* <table>
-    <tr>
-    <th>S. no</th>
-    <th>State</th>
-    <th>Active</th>
-    <th>Cured</th>
-    <th>Death</th>
-  </tr>
- 
-    {users && users.map((user, i) => <tr>
-    <td>{i}</td>
-    <td>{user.state_name}</td>
-    <td>{user.active}</td>
-    <td>{user.cured}</td>
-    <td>{user.death}</td>
-  </tr>)}
-
-    
-  
-</table> */}
 
 <Tabs tabPosition={"left"}>
 
@@ -187,13 +130,9 @@ const formatDataSource= () => {
     </Col>
 </Row>
 <br/>
-          <Table dataSource={formatDataSource()}  columns={columns()} bordered />;
-
+          <Table dataSource={formatDataSource()}  columns={columns()} bordered loading={loading} />
           </TabPane>
-        
           <TabPane tab="Map view" key="2">
-         
-
          <Row>
       <Col span={14} offset={3}>
       <India onMouseOver={(value) => getNotifDataFunt(value.nativeEvent.path[0].id)} />
