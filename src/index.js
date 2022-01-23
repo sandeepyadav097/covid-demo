@@ -9,6 +9,7 @@ import Main from "./components/main.jsx";
 import _ from 'lodash';
 import "./main.css"
 import 'antd/dist/antd.css';
+import registerServiceWorker from "./serviceWorkerRegistration";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -37,3 +38,4 @@ ReactDOM.render(
   document.getElementById("root")
 );
 
+registerServiceWorker()

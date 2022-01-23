@@ -30,32 +30,7 @@ self.skipWaiting();
  */
 precacheAndRoute(self.__WB_MANIFEST);
 
-// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
-// @see https://developers.google.com/web/tools/workbox/guides/common-recipes#google_fonts
-registerRoute(
-  ({url}) => url.origin === 'https://fonts.googleapis.com',
-  new StaleWhileRevalidate({
-    cacheName: 'google-fonts-stylesheets',
-  })
-);
 
-// Cache the underlying font files with a cache-first strategy for 1 year.
-// @see https://developers.google.com/web/tools/workbox/guides/common-recipes#google_fonts
-registerRoute(
-  ({url}) => url.origin === 'https://fonts.gstatic.com',
-  new CacheFirst({
-    cacheName: 'google-fonts-webfonts',
-    plugins: [
-      new CacheableResponsePlugin({
-        statuses: [0, 200],
-      }),
-      new ExpirationPlugin({
-        maxAgeSeconds: 60 * 60 * 24 * 365,
-        maxEntries: 30,
-      }),
-    ],
-  })
-);
 
 /**
  * Move api.
@@ -63,15 +38,16 @@ registerRoute(
  * Caches at: runtime
  */
 registerRoute(
-  ({url}) => url.origin === 'https://api.themoviedb.org' &&
-    url.pathname.startsWith('/3/discover/tv'),
+  ({url}) => url.origin === 'https://inshorts-demo-backend.herokuapp.com',
+  // && url.pathname.startsWith('/getData') || url.pathname.startsWith('/searchData') ,
   new StaleWhileRevalidate({
-    cacheName: 'movie-api-response',
+    cacheName: 'covid-api-response',
     plugins: [
       new CacheableResponsePlugin({
         statuses: [0, 200],
       }),
-      new ExpirationPlugin({maxEntries: 1}), // Will cache maximum 1 requests.
+      new ExpirationPlugin({maxEntries: 1,
+        maxAgeSeconds: 2*60}), // Will cache maximum 1 requests.
     ]
   })
 );
