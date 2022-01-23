@@ -10,7 +10,7 @@ import India from '../new_india.svg';
 const Main = () => {
   const dispatch = useDispatch();
   const users = useSelector((state) => state.fetchDataReducer.data);
-  const [noif,setNotif]=useState({})
+  const [notif,setNotif]=useState({})
   const loading = useSelector((state) => state.fetchDataReducer.loading);
   const error = useSelector((state) => state.fetchDataReducer.error);
   const ref=useRef();
@@ -32,39 +32,40 @@ const getNotifDataFunt = (id) => {
   console.log(name)
   const temp=users.filter((val) => {return val.state_name.toLowerCase().includes(name.toLowerCase())})
   console.log(temp)
+  setNotif(temp);
   return temp;
 }
 
-const openNotification = (id) => {
- console.log(id)
-  const getNotifData=getNotifDataFunt(id)
-  const args = {
-    key,
-    message: <h2>{getNotifData[0].state_name}</h2>,
-    description:<div>
-     <table>
-    <tr>
+// const openNotification = (id) => {
+//  console.log(id)
+//   const getNotifData=getNotifDataFunt(id)
+//   const args = {
+//     key,
+//     message: <h2>{getNotifData[0].state_name}</h2>,
+//     description:<div>
+//      <table>
+//     <tr>
    
-    <th>Active</th>
-    <th>Cured</th>
-    <th>Death</th>
-  </tr>
+//     <th>Active</th>
+//     <th>Cured</th>
+//     <th>Death</th>
+//   </tr>
  
-    <tr>
+//     <tr>
    
    
-    <td>{getNotifData[0].active}</td>
-    <td>{getNotifData[0].cured}</td>
-    <td>{getNotifData[0].death}</td>
-  </tr>
-  </table>
-    </div>,
-    duration: 10,
-  };
-  const conditions = ['foreign','water']
-  if(!conditions.some(el => id.includes(el)))
-  notification.open(args);
-};
+//     <td>{getNotifData[0].active}</td>
+//     <td>{getNotifData[0].cured}</td>
+//     <td>{getNotifData[0].death}</td>
+//   </tr>
+//   </table>
+//     </div>,
+//     duration: 10,
+//   };
+//   const conditions = ['foreign','water']
+//   if(!conditions.some(el => id.includes(el)))
+//   notification.open(args);
+// };
 const reset = () => {
   ref.current.state.value="";
   dispatch(fetchData());
@@ -76,7 +77,7 @@ const formatDataSource= () => {
     return { 
     sno:i+1,
     state_name:user.state_name,
-    new_cured:user.new_cured + " ⇧ ⇩",
+    new_cured:user.new_cured,
     new_death:user.new_death,
     new_active:user.new_active
     }
@@ -107,20 +108,25 @@ const formatDataSource= () => {
         title: 'Cured',
         dataIndex: 'new_cured',
         key: 'new_cured',
-        sorter: (a, b) => a.cured - b.cured,
+        sorter: (a, b) => a.new_cured - b.new_cured,
       },
       {
         title: 'Death',
         dataIndex: 'new_death',
         key: 'new_death',
-        sorter: (a, b) => a.death - b.death,
+        sorter: (a, b) =>  a.new_death - b.new_death,
       },
     ];
   }
   return (
 
 <Layout className='pad-space'>
-      <h1 >Data for Today</h1>
+  <div class="heading">
+  <h1>Covid Dashboard using React-Redux</h1>
+
+  </div>
+
+ 
 
       <Row gutter={1} style={{textAlign:'center'}}>
         <Col span={7} />
@@ -139,16 +145,6 @@ const formatDataSource= () => {
   </Row>
 <br/>
 
-<Row>
-  <Col span={3}/>
-    <Col span={10}>
-<Search ref={ref} placeholder="input search text" enterButton={'Search'} size="large" loading={false} onSearch={searchHandler}/>
-    
-    </Col>
-    <Col offset={9} span={1}>
-    <Button size='large' onClick={reset}>Reset </Button>
-    </Col>
-</Row>
 
   
   <br/>
@@ -177,17 +173,55 @@ const formatDataSource= () => {
 </table> */}
 
 <Tabs tabPosition={"left"}>
+
+
           <TabPane tab="Active" key="1">
+          <Row>
+  
+    <Col span={21}>
+<Search ref={ref} placeholder="input search text" enterButton={'Search'} size="large" loading={false} onSearch={searchHandler}/>
+    
+    </Col>
+    <Col offset={1} span={1}>
+    <Button size='large' onClick={reset}>Reset </Button>
+    </Col>
+</Row>
+<br/>
           <Table dataSource={formatDataSource()}  columns={columns()} bordered />;
 
           </TabPane>
-          <TabPane tab="Tab 2" key="2">
-          <Table dataSource={formatDataSource()}  columns={columns()} bordered />;
-
-          </TabPane>
-          <TabPane tab="Tab 3" key="3">
+        
+          <TabPane tab="Map view" key="2">
          
-       <India onMouseOver={(value) => openNotification(value.nativeEvent.path[0].id)} />
+
+         <Row>
+      <Col span={14} offset={3}>
+      <India onMouseOver={(value) => getNotifDataFunt(value.nativeEvent.path[0].id)} />
+     
+      </Col>
+      <Col>
+      
+      <p>{notif.length && notif[0].state_name || "Select a state"}</p>
+      <table>
+      
+    <tr>
+    <th>Active</th>
+    <th>Cured</th>
+    <th>Death</th>
+  </tr>
+ 
+    <tr>
+    <td>{notif.length && notif[0].active || 0 }</td>
+    <td>{notif.length && notif[0].cured || 0}</td>
+    <td>{notif.length && notif[0].death || 0 }</td>
+  </tr>
+  </table>
+  
+
+      </Col>
+
+         </Row>
+       
        
           </TabPane>
         </Tabs>

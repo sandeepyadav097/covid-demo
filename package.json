@@ -7,7 +7,7 @@
     "webpack-dev-server": "webpack-dev-server",
     "dev": "webpack serve --mode=development",
     "prod": "rm -rf dist && webpack --mode=production",
-    "serve": "npm run prod && serve -s dist",
+    "serve": "npm run prod",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Sandeep Yadav",

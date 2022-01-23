@@ -36,3 +36,8 @@ path[id$='water_1_']:hover {
 path[id$='foreign_1_']:hover {
     fill:black
 }
+
+.heading{
+    text-align:center;
+    padding:2em
+}
