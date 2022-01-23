@@ -1,0 +1,38 @@
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+/* tr:nth-child(even) {
+  background-color: #dddddd;
+} */
+
+.center{
+    text-align: center;
+}
+
+.pad-space {
+     padding-left: 50px;
+     padding-right: 50px;
+}
+
+path[id$='_1_']:hover {
+    fill:red
+}
+path[id*='path']:hover {
+    fill:red;
+}
+path[id$='water_1_']:hover {
+    fill:aqua;
+}
+
+path[id$='foreign_1_']:hover {
+    fill:black
+}
