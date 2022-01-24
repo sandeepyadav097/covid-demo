@@ -1,7 +1,8 @@
 # Covid Demo
 
 
-The app has been setup from scratch using webapack and vanilla react. Completed tasks have been ticked off.
+The app has been setup from scratch using webapack and vanilla react+redux. Used redux saga as the middleware. 
+Used Ant Design for the UI. Completed tasks have been ticked off.
 
 - [x] Scrape content from https://www.mohfw.gov.in/ 
 - [x] Visualise the data on the frontend in a presentable manner.
@@ -9,7 +10,7 @@ The app has been setup from scratch using webapack and vanilla react. Completed 
 - [x] The application should be responsive, i.e. should display properly on mobile , tablets and
 desktop
 - [x] Implement service workers and cache results for 2 minutes on the client side using
-service workers.
+service workers Implemented for the main route.
 - [x] Share the endpoint URL (if hosted) and github repository
 - [x] Bonus points for deploying the project on https://www.heroku.com/ or any other free
 service for live demo purposes
